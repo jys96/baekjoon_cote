@@ -1,29 +1,29 @@
 def solution(mats, park):
+    answer = -1
     
-    mats.sort(reverse=True)
+    width = len(park)
+    height = len(park)
     
-    rows = len(park)      
-    cols = len(park[0])   
+    for mat in mats:
+        for h in range(height):
+            for w in range(width):
+                target = park[h][w:w+mat]
+                
+                if target.count("-1") >= mat:
+                    chk = False
+                    end = h + mat
+                    if end <= height:
+                        for i in range(h, end):
+                            h_target = park[i][w:w+mat]
+
+                            if h_target.count("-1") >= mat:
+                                chk = True
+                            else:
+                                chk = False
+                                break
+                            
+                    if chk:
+                        if answer < mat:
+                            answer = mat
     
-    for size in mats:
-        
-        for i in range(rows - size + 1):
-            for j in range(cols - size + 1):
-                
-                
-                can_place = True
-                
-                
-                for r in range(size):
-                    for c in range(size):
-                        
-                        if park[i + r][j + c] != "-1":
-                            can_place = False
-                            break
-                    if not can_place:
-                        break
-                
-                if can_place:
-                    return size
-    
-    return -1
+    return answer
