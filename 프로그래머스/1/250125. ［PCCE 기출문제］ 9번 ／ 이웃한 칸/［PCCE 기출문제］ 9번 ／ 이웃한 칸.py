@@ -1,15 +1,17 @@
 def solution(board, h, w):
     answer = 0
+    target = board[h][w]
+    n = len(board)
     
-    nearby = [
-        board[h-1][w] if h > 0 else '',
-        board[h+1][w] if h < len(board)-1 else '',
-        board[h][w-1] if w > 0 else '',
-        board[h][w+1] if w < len(board[h])-1 else '',
-    ]
+    dh = [-1, 1, 0, 0]
+    dw = [0, 0, -1, 1]
     
-    for i in nearby:
-        if i == board[h][w]:
-            answer += 1
+    for i in range(4):
+        new_h = h + dh[i]
+        new_w = w + dw[i]
+        
+        if 0 <= new_h < n and 0 <= new_w < n:
+            if board[new_h][new_w] == target:
+                answer += 1
     
     return answer
